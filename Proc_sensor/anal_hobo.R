@@ -11,8 +11,11 @@ library(ggplot2)
 library(scales)
 library(gridExtra)
 
-workingdir="D:/Sync/_Amsterdam/11_AndrasProject/balaton/"
-locations=c("fuzfo","mariafurdo","sajkod","szantod","szigliget")
+#workingdir="D:/Sync/_Amsterdam/11_AndrasProject/balaton/"
+#locations=c("fuzfo","mariafurdo","sajkod","szantod","szigliget")
+
+workingdir="D:/Sync/_Amsterdam/11_AndrasProject/tisza/"
+locations=c("poroszlo","tiszafured","tiszaorveny","tiszavalk")
 
 for (filename in locations) {
   print(filename)

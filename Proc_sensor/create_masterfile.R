@@ -7,8 +7,11 @@ library(readxl)
 library(data.table)
 library(rgdal)
 
-workingdir="D:/Sync/_Amsterdam/11_AndrasProject/balaton/"
-locations=c("fuzfo","mariafurdo","sajkod","szantod","szigliget")
+#workingdir="D:/Sync/_Amsterdam/11_AndrasProject/balaton/"
+#locations=c("fuzfo","mariafurdo","sajkod","szantod","szigliget")
+
+workingdir="D:/Sync/_Amsterdam/11_AndrasProject/tisza/"
+locations=c("poroszlo","tiszafured","tiszaorveny","tiszavalk")
 
 # Organize water tempreture data
 
