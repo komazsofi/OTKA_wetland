@@ -38,7 +38,7 @@ lidar_ferto2_merged=merge(ferto_2,ferto_lidar, by.x=c('point_ID','point_name'), 
 lidar_ferto2_merged_cleaned=subset(lidar_ferto2_merged,select=c(1,2,7:25,28:87,93:116,133:138))
 
 lidar_tisza_merged=merge(tisza,tisza_lidar, by.x=c('point_name'), by.y=c('pont_nm'))
-lidar_tisza_merged_cleaned=subset(lidar_tisza_merged,select=c(1,6,7:25,28:87,93:116,131:136))
+lidar_tisza_merged_cleaned=subset(lidar_tisza_merged,select=c(6,1,7:25,28:87,93:116,131:136))
 
 names(lidar_tisza_merged_cleaned) <- names(lidar_balaton_merged_cleaned)
 
