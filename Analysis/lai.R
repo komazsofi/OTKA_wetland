@@ -1,4 +1,5 @@
 library(ggplot2)
+library(usdm)
 
 workdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Analysis/lidar_anal/"
 setwd(workdir)
@@ -29,6 +30,9 @@ balaton_sub=subset(balaton, select=c("OBJNAME","coords.x1","coords.x2","class","
                                  "Z_entropy","Z_range","Z_stdv","Z_variance","gct_lai","gap_fracti","loc"))
 
 forlai=rbind(ferto_sub,tisza_sub,balaton_sub)
+write.csv(forlai,"forlai.csv")
+
+# Correlation  against response
 
 gct_lai=data.frame(cor(forlai[5:28], forlai$gct_lai,method = "spearman"))
 gct_lai1=data.frame(cor(ferto_sub[5:28], ferto_sub$gct_lai,method = "spearman"))
@@ -55,3 +59,14 @@ write.csv(gct_lai_all,"cover_all_corr.csv")
 
 ggplot(data =forlai, aes(x=gct_lai, y=pdens,colour=factor(loc))) + geom_point(aes(colour=factor(loc))) + geom_smooth(method='lm') + theme_minimal()
 ggplot(data =forlai, aes(x=gct_lai, y=pcount,colour=factor(loc))) + geom_point(aes(colour=factor(loc))) + geom_smooth(method='lm') + theme_minimal()
+
+# Correlations among predictor variables
+v=vifcor(forlai[5:28],th=0.6)
+
+forlai_mlr=subset(tisza_sub,select=c(7,11,20,24,28,29))
+
+model <- lm(gct_lai ~ Amplitude_mean + NormalizedZ_P10 + NrOfEchos_max + shannonEntropy + Z_variance, data = forlai_mlr)
+summary(model)
+
+model <- glm(gct_lai ~ Amplitude_mean + NormalizedZ_P10 + NrOfEchos_max + shannonEntropy + Z_variance, data = forlai_mlr)
+summary(model)
