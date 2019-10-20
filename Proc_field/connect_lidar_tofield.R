@@ -42,6 +42,10 @@ lidar_tisza_merged_cleaned=subset(lidar_tisza_merged,select=c(6,1,7:25,28:87,93:
 
 names(lidar_tisza_merged_cleaned) <- names(lidar_balaton_merged_cleaned)
 
+lidar_balaton_merged_cleaned$lake<- "balaton"
+lidar_ferto1_merged_cleaned$lake<- "ferto-hun"
+lidar_tisza_merged_cleaned$lake<- "tisza"
+
 all_merged=rbind(lidar_balaton_merged_cleaned,lidar_ferto1_merged_cleaned,lidar_tisza_merged_cleaned)
 
 write.csv(all_merged,"lidar_and_field_merged.csv")
