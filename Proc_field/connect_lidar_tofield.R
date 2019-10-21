@@ -11,8 +11,6 @@ library(ggplot2)
 library(scales)
 library(gridExtra)
 
-library(stargazer)
-
 workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Analysis/field_measured_data/"
 setwd(workingdir)
 
