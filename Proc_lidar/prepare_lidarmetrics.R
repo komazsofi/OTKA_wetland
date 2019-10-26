@@ -3,16 +3,17 @@ library(rgdal)
 library(raster)
 library(dplyr)
 library(sdm)
+library(stringr)
 
-#workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/lidar/fertoTo_HU_AT-20191019T065213Z-001/fertoTo_HU_AT/"
-#workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/lidar/tiszaToLeafOff-20191005T092642Z-001/tiszaToLeafOff/"
-#workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/lidar/tiszaToLeafOn-20191019T070028Z-001/tiszaToLeafOn/"
-workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/lidar/balaton-20191002T063108Z-001/balaton/"
+workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/lidar/fertoTo_HU_AT-20191026T210011Z-001/fertoTo_HU_AT/"
+#workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/lidar/tiszaToLeafOff-20191026T193315Z-001/tiszaToLeafOff/"
+#workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/lidar/tiszaToLeafOn-20191026T205134Z-001/tiszaToLeafOn/"
+#workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/lidar/balaton-20191026T153059Z-001/balaton/"
 setwd(workingdir)
 
-#shp=readOGR(".","w_point")
+shp=readOGR(".","w_point")
 #shp=readOGR(".","tisza_full")
-shp=readOGR(".","w_point_balaton")
+#shp=readOGR(".","w_point_balaton")
 shp.df <- as(shp, "data.frame")
 
 shp_sel=subset(shp.df, select=c("coords.x1","coords.x2","class","OBJNAME"))
@@ -26,7 +27,9 @@ id=sub("_.*", "", filelist)
 id=unique(id)
 
 feaname=substring(filelist, 10)
-feaname=sub('\\..*', "", feaname)
+feaname
+
+feaname=str_remove(feaname, "[1_]")
 
 feaname=unique(feaname)
 
@@ -34,8 +37,26 @@ for (i in id) {
   print(i)
   
   rastlist=list.files(pattern=paste("^",i,".*\\.tif$",sep=""))
+  raster_example=raster(rastlist[1],crs="+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs")
   
-  rasters=stack(rastlist)
+  for (k in 1:length(rastlist)){
+    r <- raster(rastlist[k], crs="+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs")
+    rp <- projectRaster(from = r, to = raster_example,
+                        filename = file.path("./crop", rastlist[k]),
+                        method = "bilinear",
+                        format = "raster",
+                        overwrite = TRUE)
+  }
+  
+  rastlist2=list.files(path="./crop",pattern=paste("^",i,".*\\.grd$",sep=""),full.names = TRUE)
+  rastlist3=list.files(path="./crop",pattern=paste("^",i,".*\\.grd$",sep=""),full.names = FALSE)
+  
+  feaname=substring(rastlist3, 10)
+  feaname=str_remove(feaname, "[1_]")
+  feaname=str_remove(feaname, "[_]")
+  feaname=str_remove(feaname, "[_]")
+  
+  rasters=stack(rastlist2)
   
   crs(rasters) <- "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs"
   names(rasters) <- feaname
@@ -50,6 +71,7 @@ for (j in grdlist) {
   print(j)
   
   raster=stack(j)
+  print(dim(raster))
   
   d <- sdmData(class~.,train=shp_sel,predictors = raster)
   data=d@features
@@ -70,5 +92,5 @@ allcsv_df <- do.call(rbind.data.frame, allcsv)
 
 #write.csv(allcsv_df,"ferto_lidar.csv")
 #write.csv(allcsv_df,"tisza_leafoff_lidar.csv")
-#write.csv(allcsv_df,"tisza_leafon_lidar.csv")
-write.csv(allcsv_df,"balaton_lidar.csv")
+write.csv(allcsv_df,"tisza_leafon_lidar.csv")
+#write.csv(allcsv_df,"balaton_lidar.csv")
