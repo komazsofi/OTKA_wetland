@@ -192,3 +192,15 @@ model_corti <- lm(above15_pole_persum ~ above15_bio_persum, data = data[data$veg
 summary(model_corti)
 
 p12=ggplot(data =data[data$veg_type_2=="phragmites",], aes(x=above15_pole_persum, y=above15_bio_persum)) + geom_point(aes(colour=veg_type_2)) + geom_smooth(method='lm') + theme_minimal() + xlab("Above 1.5 m pole contact to total") + ylab("Above 1.5 m biomass to total")
+
+fig=grid.arrange(
+  p8,
+  p9,
+  p10,
+  p11,
+  p12,
+  ncol=3,
+  nrow=2
+)
+
+stargazer(model_bvsh,model_bm,model_lai_h2,model_dry,model_corti, type = "text",out="point_to_quadrat2.txt")
