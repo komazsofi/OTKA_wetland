@@ -152,28 +152,28 @@ fig=grid.arrange(
   nrow=3
 )
 
-stargazer(model,model_lai,model_lai2,model_lai_h,model_frac,model_frac2,model_fhd,model_fhd_rao, type = "text",out="point_to_quadrat.txt")
+stargazer(model,model_lai,model_lai2,model_frac,model_frac2,model_fhd,model_fhd_rao, type = "text",out="point_to_quadrat.txt")
 
 # total biomass vs. pole contact height
 
 model_bvsh <- lm(`veg height from pole` ~ `total weight`, data = data[data$veg_type_2=="phragmites",])
 summary(model_bvsh)
 
-p8=ggplot(data =data[data$veg_type_2=="phragmites",], aes(x=`veg height from pole`, y=`total weight`)) + geom_point(aes(colour=veg_type_2)) + geom_smooth(method='lm') + theme_minimal() + xlab("Pole height [m]") + ylab("Total biomass")
+p8=ggplot(data =data[data$veg_type_2=="phragmites",], aes(x=`veg height from pole`, y=`total weight`)) + geom_point(aes(colour=veg_type)) + geom_smooth(method='lm') + theme_minimal() + xlab("Pole height [m]") + ylab("Total biomass")
 
 # total biomass vs. full contact
 
 model_bm <- lm(sum_pole_contacts ~ `total weight`, data = data[data$veg_type_2=="phragmites",])
 summary(model_bm)
 
-p9=ggplot(data =data[data$veg_type_2=="phragmites",], aes(x=sum_pole_contacts, y=`total weight`)) + geom_point(aes(colour=veg_type_2)) + geom_smooth(method='lm') + theme_minimal() + xlab("Sum pole contacts") + ylab("Total biomass")
+p9=ggplot(data =data[data$veg_type_2=="phragmites",], aes(x=sum_pole_contacts, y=`total weight`)) + geom_point(aes(colour=veg_type)) + geom_smooth(method='lm') + theme_minimal() + xlab("Sum pole contacts") + ylab("Total biomass")
 
 # LAI vs. quadrat height
 
 model_lai_h2 <- lm(`lai photo lai` ~ veg_height_m, data = data[data$veg_type_2=="phragmites",])
 summary(model_lai_h2)
 
-p10=ggplot(data =data[data$veg_type_2=="phragmites",], aes(x=`lai photo lai`, y=veg_height_m)) + geom_point(aes(colour=veg_type_2)) + geom_smooth(method='lm') + theme_minimal() + xlab("LAI") + ylab("Vegetation height")
+p10=ggplot(data =data[data$veg_type_2=="phragmites",], aes(x=`lai photo lai`, y=veg_height_m)) + geom_point(aes(colour=veg_type)) + geom_smooth(method='lm') + theme_minimal() + xlab("LAI") + ylab("Vegetation height")
 
 # total dry vs. pole 0-1 m /total
 data$sum_dry_weight=rowSums(data[,c(45,49,54,58,60,64,68,72,76,80)])
@@ -182,7 +182,7 @@ data$pole01_persum=(sum(data$`5_pole_con`,data$`5_1_pole_c`))/data$sum_pole_cont
 model_dry <- lm(sum_dry_weight ~ pole01_persum, data = data[data$veg_type_2=="phragmites",])
 summary(model_dry)
 
-p11=ggplot(data =data[data$veg_type_2=="phragmites",], aes(x=sum_dry_weight, y=pole01_persum)) + geom_point(aes(colour=veg_type_2)) + geom_smooth(method='lm') + theme_minimal() + xlab("Total dry weight") + ylab("Pole contact between 0-1 to total")
+p11=ggplot(data =data[data$veg_type_2=="phragmites",], aes(x=sum_dry_weight, y=pole01_persum)) + geom_point(aes(colour=veg_type)) + geom_smooth(method='lm') + theme_minimal() + xlab("Total dry weight") + ylab("Pole contact between 0-1 to total")
 
 # above 1.5 m pole contact per all vs. above 1.5 biomass per all
 data$above15_pole_persum=(sum(data$`5_2_pole_c`,data$`5_pole_c_2`,data$`5_3_pole_c`,data$`5_pole_c_3`,data$`5_4_pole_c`,data$`5_pole_c_4`,data$`5_5_pole_c`))/data$sum_pole_contacts
@@ -191,7 +191,34 @@ data$above15_bio_persum=(sum(data$`1.5_2_total_weight`,data$`2_2.5_total_weight`
 model_corti <- lm(above15_pole_persum ~ above15_bio_persum, data = data[data$veg_type_2=="phragmites",])
 summary(model_corti)
 
-p12=ggplot(data =data[data$veg_type_2=="phragmites",], aes(x=above15_pole_persum, y=above15_bio_persum)) + geom_point(aes(colour=veg_type_2)) + geom_smooth(method='lm') + theme_minimal() + xlab("Above 1.5 m pole contact to total") + ylab("Above 1.5 m biomass to total")
+p12=ggplot(data =data[data$veg_type_2=="phragmites",], aes(x=above15_pole_persum, y=above15_bio_persum)) + geom_point(aes(colour=veg_type)) + geom_smooth(method='lm') + theme_minimal() + xlab("Above 1.5 m pole contact to total") + ylab("Above 1.5 m biomass to total")
+
+# full contact vs. LAI
+
+model_clai <- lm(sum_pole_contacts ~ `lai photo lai`, data = data[data$veg_type_2=="phragmites",])
+summary(model_clai)
+
+p13=ggplot(data =data[data$veg_type_2=="phragmites",], aes(x=sum_pole_contacts, y=`lai photo lai`)) + geom_point(aes(colour=veg_type)) + geom_smooth(method='lm') + theme_minimal() + xlab("Sum pole contacts") + ylab("LAI proxy")
+
+# full contact vs. height
+
+model_ch <- lm(sum_pole_contacts ~ veg_height_m, data = data[data$veg_type_2=="phragmites",])
+summary(model_ch)
+
+p14=ggplot(data =data[data$veg_type_2=="phragmites",], aes(x=sum_pole_contacts, y=veg_height_m)) + geom_point(aes(colour=veg_type)) + geom_smooth(method='lm') + theme_minimal() + xlab("Sum pole contacts") + ylab("Quandrat height")
+
+# FHD contact vs total biomass
+
+model_cfhd_b <- lm(fhd_pole ~ `total weight`, data = data[data$veg_type_2=="phragmites",])
+summary(model_cfhd_b)
+
+p15=ggplot(data =data[data$veg_type_2=="phragmites",], aes(x=fhd_bio, y=`total weight`)) + geom_point(aes(colour=veg_type)) + geom_smooth(method='lm') + theme_minimal() + xlab("Pole FHD") + ylab("Total weight")
+
+# FHD rao contact vs biomass
+model_cfhdr_b <- lm(fhd_pole_rao ~ `total weight`, data = data[data$veg_type_2=="phragmites",])
+summary(model_cfhdr_b)
+
+p16=ggplot(data =data[data$veg_type_2=="phragmites",], aes(x=fhd_pole_rao, y=`total weight`)) + geom_point(aes(colour=veg_type)) + geom_smooth(method='lm') + theme_minimal() + xlab("Pole FHD rao") + ylab("Total weight")
 
 fig=grid.arrange(
   p8,
@@ -199,8 +226,12 @@ fig=grid.arrange(
   p10,
   p11,
   p12,
+  p13,
+  p14,
+  p15,
+  p16,
   ncol=3,
-  nrow=2
+  nrow=3
 )
 
-stargazer(model_bvsh,model_bm,model_lai_h2,model_dry,model_corti, type = "text",out="point_to_quadrat2.txt")
+stargazer(model_lai_h,model_bvsh,model_bm,model_lai_h2,model_dry,model_corti,model_clai,model_ch,model_cfhd_b,model_cfhdr_b, type = "text",out="point_to_quadrat2.txt")
