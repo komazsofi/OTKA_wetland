@@ -90,7 +90,7 @@ allcsv <- lapply(files,function(g){
 
 allcsv_df <- do.call(rbind.data.frame, allcsv)
 
-#write.csv(allcsv_df,"ferto_lidar.csv")
+write.csv(allcsv_df,"ferto_lidar.csv")
 #write.csv(allcsv_df,"tisza_leafoff_lidar.csv")
-write.csv(allcsv_df,"tisza_leafon_lidar.csv")
+#write.csv(allcsv_df,"tisza_leafon_lidar.csv")
 #write.csv(allcsv_df,"balaton_lidar.csv")
