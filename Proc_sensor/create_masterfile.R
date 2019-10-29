@@ -10,8 +10,12 @@ library(rgdal)
 #workingdir="D:/Sync/_Amsterdam/11_AndrasProject/balaton/"
 #locations=c("fuzfo","mariafurdo","sajkod","szantod","szigliget")
 
-workingdir="D:/Sync/_Amsterdam/11_AndrasProject/tisza/"
-locations=c("poroszlo","tiszafured","tiszaorveny","tiszavalk")
+#workingdir="D:/Sync/_Amsterdam/11_AndrasProject/tisza/"
+#locations=c("poroszlo","tiszafured","tiszaorveny","tiszavalk")
+
+workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Processed/ferto/"
+#locations=c("fertoboz","hegyko")
+locations=c("illmitz1","illmitz2","morbisch","podersdorf")
 
 # Organize water tempreture data
 
