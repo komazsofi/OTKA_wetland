@@ -14,8 +14,8 @@ library(rgdal)
 #locations=c("poroszlo","tiszafured","tiszaorveny","tiszavalk")
 
 workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Processed/ferto/"
-#locations=c("fertoboz","hegyko")
-locations=c("illmitz1","illmitz2","morbisch","podersdorf")
+#locations=c("fertoboz","hegyko","morbisch","podersdorf")
+locations=c("illmitz1","illmitz2")
 
 for (filename in locations) {
   print(filename)

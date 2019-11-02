@@ -6,6 +6,7 @@ Aim: process wetland OTKA project data step 2.: organize a master file which wil
 library(readxl)
 library(data.table)
 library(rgdal)
+library(stringr)
 
 #workingdir="D:/Sync/_Amsterdam/11_AndrasProject/balaton/"
 #locations=c("fuzfo","mariafurdo","sajkod","szantod","szigliget")
@@ -14,8 +15,8 @@ library(rgdal)
 #locations=c("poroszlo","tiszafured","tiszaorveny","tiszavalk")
 
 workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Processed/ferto/"
-#locations=c("fertoboz","hegyko")
-locations=c("illmitz1","illmitz2","morbisch","podersdorf")
+#locations=c("fertoboz","hegyko","morbisch","podersdorf")
+locations=c("illmitz1","illmitz2")
 
 # Organize water tempreture data
 
@@ -33,6 +34,10 @@ for (filename in locations) {
     coord=read.csv(j)
     
     sensorid=sub("_.*", "", filelist)
+    sensorid=str_remove(sensorid, "[.]")
+    sensorid=str_remove(sensorid, "[t]")
+    sensorid=str_remove(sensorid, "[x]")
+    sensorid=str_remove(sensorid, "[t]")
     
     headerdata <- data.frame(matrix(unlist(filelist), nrow=length(filelist), byrow=T),stringsAsFactors=FALSE)
     names(headerdata)<- c("hobo")
@@ -70,6 +75,10 @@ for (filename in locations) {
     coord=read.csv(j)
     
     sensorid=sub("_.*", "", filelist)
+    sensorid=str_remove(sensorid, "[.]")
+    sensorid=str_remove(sensorid, "[t]")
+    sensorid=str_remove(sensorid, "[x]")
+    sensorid=str_remove(sensorid, "[t]")
     
     headerdata <- data.frame(matrix(unlist(filelist), nrow=length(filelist), byrow=T),stringsAsFactors=FALSE)
     names(headerdata)<- c("easylog")
