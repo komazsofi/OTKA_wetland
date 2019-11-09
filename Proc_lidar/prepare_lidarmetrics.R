@@ -11,6 +11,9 @@ workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/lidar/fertoTo_HU_AT
 #workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/lidar/balaton-20191026T153059Z-001/balaton/"
 setwd(workingdir)
 
+crs_proj="+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs"
+#crs_proj="+proj=utm +zone=34 +datum=WGS84 +units=m +no_defs"
+
 shp=readOGR(".","w_point")
 #shp=readOGR(".","tisza_full")
 #shp=readOGR(".","w_point_balaton")
@@ -19,7 +22,7 @@ shp.df <- as(shp, "data.frame")
 shp_sel=subset(shp.df, select=c("coords.x1","coords.x2","class","OBJNAME"))
 
 coordinates(shp_sel)=~coords.x1+coords.x2
-proj4string(shp_sel)<- CRS("+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs")
+proj4string(shp_sel)<- CRS(crs_proj)
 
 filelist=list.files(pattern = "*.tif")
 
@@ -27,7 +30,6 @@ id=sub("_.*", "", filelist)
 id=unique(id)
 
 feaname=substring(filelist, 10)
-feaname
 
 feaname=str_remove(feaname, "[1_]")
 
@@ -37,10 +39,10 @@ for (i in id) {
   print(i)
   
   rastlist=list.files(pattern=paste("^",i,".*\\.tif$",sep=""))
-  raster_example=raster(rastlist[1],crs="+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs")
+  raster_example=raster(rastlist[1],crs=crs_proj)
   
   for (k in 1:length(rastlist)){
-    r <- raster(rastlist[k], crs="+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs")
+    r <- raster(rastlist[k], crs=crs_proj)
     rp <- projectRaster(from = r, to = raster_example,
                         filename = file.path("./crop", rastlist[k]),
                         method = "bilinear",
@@ -58,10 +60,26 @@ for (i in id) {
   
   rasters=stack(rastlist2)
   
-  crs(rasters) <- "+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs"
+  crs(rasters) <- crs_proj
   names(rasters) <- feaname
   
-  writeRaster(rasters,paste(i,"merged.grd",sep=""),overwrite=TRUE)
+  rasters$pc_rel1.grd=rasters$pc1.grd/rasters$pcount.grd
+  rasters$pc_rel2.grd=rasters$pc2.grd/rasters$pcount.grd
+  rasters$pc_rel3.grd=rasters$pc3.grd/rasters$pcount.grd
+  rasters$pc_rel4.grd=rasters$pc4.grd/rasters$pcount.grd
+  rasters$pc_rel5.grd=rasters$pc5.grd/rasters$pcount.grd
+  rasters$pc_rel6.grd=rasters$pc6.grd/rasters$pcount.grd
+  rasters$pc_rel7.grd=rasters$pc7.grd/rasters$pcount.grd
+  rasters$pc_rel8.grd=rasters$pc8.grd/rasters$pcount.grd
+  rasters$pc_rel9.grd=rasters$pc9.grd/rasters$pcount.grd
+  rasters$pc_rel10.grd=rasters$pc10.grd/rasters$pcount.grd
+  
+  rasters$pc_rel_1_5.grd=rasters$pcsub15.grd/rasters$pcount.grd
+  rasters$pc_rel_high.grd=rasters$pchigh.grd/rasters$pcount.grd
+  
+  sel_rasters=subset(rasters, c(2,5,7,9,10,11,12,14,15:24,40,41,43:57,39))
+  
+  writeRaster(sel_rasters,paste(i,"merged.grd",sep=""),overwrite=TRUE)
   
 }
 
