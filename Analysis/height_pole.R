@@ -32,6 +32,8 @@ v
 # after multicollinearity check c(13,28,14,41,12,34,18,35)
 
 # LM based on ecological expectation
+ggplot(data =lidar_wpointsfield[lidar_wpointsfield$season=="leafoff",], aes(x=pole_height, y=Zrange.grd)) + geom_point(aes(colour=factor(lake))) + geom_smooth(method='lm',aes(group=lake,colour=factor(lake))) + theme_minimal() + xlab("Vegetation height [m]") + ylab("ZRange [m]") + xlim(0,4) + ylim(0,4)
+
 lm.fit_leafoff1=lm(NormalizedZP10.grd~pole_height,data=lidar_wpointsfield[lidar_wpointsfield$season=="leafoff",])
 lm.fit_leafoff2=lm(nDSM.grd~pole_height,data=lidar_wpointsfield[lidar_wpointsfield$season=="leafoff",])
 lm.fit_leafoff3=lm(Zrange.grd~pole_height,data=lidar_wpointsfield[lidar_wpointsfield$season=="leafoff",])

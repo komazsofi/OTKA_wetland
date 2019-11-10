@@ -30,6 +30,8 @@ lm.fit_leafoff3=lm(Zrange.grd~veg_height_m,data=lidar_wpointsfield[lidar_wpoints
 
 stargazer(lm.fit_leafoff1,lm.fit_leafoff2,lm.fit_leafoff3, type = "text")
 
+ggplot(data =lidar_wpointsfield[lidar_wpointsfield$season=="leafoff",], aes(x=veg_height_m, y=Zrange.grd)) + geom_point(aes(colour=factor(lake))) + geom_smooth(method='lm') + theme_minimal() + xlab("Vegetation height [m]") + ylab("ZRange [m]")
+
 # MLM with feature selection
 mlm.fit_leafoff=lm(veg_height_m ~.,data=lidar_wpointsfield[lidar_wpointsfield$season=="leafoff",c(13+2,28+2,14+2,41+2,12+2,34+2,18+2,35+2,8)])
 summary(mlm.fit_leafoff)
