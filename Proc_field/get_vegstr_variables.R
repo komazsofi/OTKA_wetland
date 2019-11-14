@@ -6,7 +6,8 @@ Aim: process wetland OTKA project data step : analyse field data
 library(readxl)
 library(data.table)
 
-workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Analysis/2019Nov/"
+#workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Analysis/2019Nov/"
+workingdir="D:/Sync/_Amsterdam/11_AndrasProject/Analysis/2019Nov/"
 setwd(workingdir)
 
 data <- read_excel("quadrat_forR.xlsx",sheet = 1)
@@ -90,9 +91,26 @@ for (i in seq(1,35)) {
   
 }
 
+#Shannon diversity
+data$shan_div<-NA
+shan_div=subset(data,select=c(39:42))
+
+for (i in seq(1,35)) {
+  print(i)
+  
+  v=as.numeric(shan_div[i,])
+  
+  p<- table(v)
+  p <- p/sum(p)
+  entropy=sum(-p*log(p))
+  
+  data$shan_div[i] <- entropy
+  
+}
+
 # export field calibration between point and quadrat
-data_forcalib_field=subset(data,select=c(2,4,5,6,7,28,22,23,24,25,38,88:93))
-names(data_forcalib_field) <- c("location","FID","point_name","point_ID","veg_type_sp","veg_type","lai","gap_fraction","veg_h_pole","sum_pole_contacts","total weight","veg_height_m","sum_leaf_weight","fhd_pole","fhd_bio","fhd_pole_rao","fhd_bio_rao")
+data_forcalib_field=subset(data,select=c(2,4,5,6,7,28,22,23,24,25,38,88:94))
+names(data_forcalib_field) <- c("location","FID","point_name","point_ID","veg_type_sp","veg_type","lai","gap_fraction","veg_h_pole","sum_pole_contacts","total weight","veg_height_m","sum_leaf_weight","fhd_pole","fhd_bio","fhd_pole_rao","fhd_bio_rao","shan_div")
 
 write.csv(data_forcalib_field,"data_for_calib_field.csv")
 

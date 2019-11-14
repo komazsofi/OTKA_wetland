@@ -11,7 +11,8 @@ library(ggplot2)
 library(scales)
 library(gridExtra)
 
-workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Analysis/2019Nov/"
+#workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Analysis/2019Nov/"
+workingdir="D:/Sync/_Amsterdam/11_AndrasProject/Analysis/2019Nov/"
 setwd(workingdir)
 
 ## Import
@@ -104,7 +105,7 @@ for (i in seq(1,length(data$X))) {
   v=as.numeric(fhd_pole[i,])
   p <- v/sum(v)
   
-  if (is.na(p)==TRUE) {data$fhd_pole_rao[i] <- 0}
+  if (is.na(p)==TRUE) {data$fhd_pole_rao[i] <- NA}
   
   else if (is.na(p)==FALSE) {
     
