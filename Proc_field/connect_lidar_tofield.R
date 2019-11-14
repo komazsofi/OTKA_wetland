@@ -11,21 +11,21 @@ library(ggplot2)
 library(scales)
 library(gridExtra)
 
-#workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Analysis/2019Nov/"
-workingdir="D:/Sync/_Amsterdam/11_AndrasProject/Analysis/2019Nov/"
+workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Analysis/2019Nov/"
+#workingdir="D:/Sync/_Amsterdam/11_AndrasProject/Analysis/2019Nov/"
 setwd(workingdir)
 
 ## Import
-balaton <- read_excel("data_quadtrat_tolidar.xlsx",sheet = 2)
+balaton <- read_excel("data_for_calib_field.xlsx",sheet = 2)
 balaton_lidar=read.csv("balaton_lidar.csv")
 
-tisza <- read_excel("data_quadtrat_tolidar.xlsx",sheet = 3)
+tisza <- read_excel("data_for_calib_field.xlsx",sheet = 3)
 tisza_lidar=read.csv("tisza_leafoff_lidar.csv")
 tiszaon_lidar=read.csv("tisza_leafon_lidar.csv")
 tisza_lidar$pointid <- NA
 tiszaon_lidar$pointid <- NA
 
-ferto <- read_excel("data_quadtrat_tolidar.xlsx",sheet = 4)
+ferto <- read_excel("data_for_calib_field.xlsx",sheet = 4)
 ferto_lidar=read.csv("ferto_lidar.csv")
 
 ## connact quadrat str. to lidar
