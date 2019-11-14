@@ -56,10 +56,5 @@ forshandiv %>%
   ggtitle("Quadrat shannon diversity") +
   theme_bw()
 
-forbiomass %>%
-  gather(-total.weight,-lake,key = "var", value = "value") %>%
-  ggplot(aes(x = value, y = total.weight,color=lake)) +
-  geom_point() +
-  facet_wrap(~ var, scales = "free") +
-  ggtitle("Quadrat biomass") +
-  theme_bw()
+-+
+  
