@@ -55,6 +55,4 @@ forshandiv %>%
   facet_wrap(~ var, scales = "free") +
   ggtitle("Quadrat shannon diversity") +
   theme_bw()
-
--+
   
