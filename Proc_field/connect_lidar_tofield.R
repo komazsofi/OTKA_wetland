@@ -11,8 +11,8 @@ library(ggplot2)
 library(scales)
 library(gridExtra)
 
-workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Analysis/2019Nov/"
-#workingdir="D:/Sync/_Amsterdam/11_AndrasProject/Analysis/2019Nov/"
+#workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Analysis/2019Nov/"
+workingdir="D:/Sync/_Amsterdam/11_AndrasProject/Analysis/2019Nov/"
 setwd(workingdir)
 
 ## Import
@@ -30,16 +30,16 @@ ferto_lidar=read.csv("ferto_lidar.csv")
 
 ## connact quadrat str. to lidar
 lidar_balaton_merged=merge(balaton,balaton_lidar, by.x=c('point_ID','point_name'), by.y=c('point_ID','point_name'))
-lidar_balaton_merged_cleaned=subset(lidar_balaton_merged,select=c(1,2,16,6:12,18:53,72:75,13))
+lidar_balaton_merged_cleaned=subset(lidar_balaton_merged,select=c(1,2,20,6:19,25:60,77:82))
 
 lidar_ferto_merged=merge(ferto,ferto_lidar, by.x=c('point_ID','point_name'), by.y=c('point_ID','point_name'))
-lidar_ferto_merged_cleaned=subset(lidar_ferto_merged,select=c(1,2,16,6:12,18:53,72:75,13))
+lidar_ferto_merged_cleaned=subset(lidar_ferto_merged,select=c(1,2,20,6:19,25:60,77:82))
 
 lidar_tisza_merged=merge(tisza,tisza_lidar, by.x=c('point_name'), by.y=c('pont_nm'))
-lidar_tisza_merged_cleaned=subset(lidar_tisza_merged,select=c(5,1,16,6:12,18:53,70,72,73,71,13))
+lidar_tisza_merged_cleaned=subset(lidar_tisza_merged,select=c(5,1,20,6:19,25:60,75:77,79,80,78))
 
 lidar_tiszaon_merged=merge(tisza,tiszaon_lidar, by.x=c('point_name'), by.y=c('pont_nm'))
-lidar_tiszaon_merged_cleaned=subset(lidar_tiszaon_merged,select=c(5,1,16,6:12,18:53,70,72,73,71,13))
+lidar_tiszaon_merged_cleaned=subset(lidar_tiszaon_merged,select=c(5,1,20,6:19,25:60,75:77,79,80,78))
 
 lidar_balaton_merged_cleaned$season <- "leafoff"
 lidar_ferto_merged_cleaned$season <-"leafoff"
