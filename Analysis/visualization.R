@@ -51,6 +51,8 @@ forFHD_field %>%
   ggtitle("Quadrat FHD vs. points measurements") +
   theme_bw()
 
+ggsave("forFHD_field.png")
+
 forFHD_rao_field %>%
   gather(-fhd_bio_rao,-lake,key = "var", value = "value") %>%
   ggplot(aes(x = value, y = fhd_bio_rao)) +
@@ -59,8 +61,10 @@ forFHD_rao_field %>%
   geom_smooth(method="lm",colour="black",se=FALSE) +
   stat_cor() +
   facet_wrap(~ var, scales = "free") +
-  ggtitle("Quadrat FHD vs. points measurements") +
+  ggtitle("Quadrat FHD rao vs. points measurements") +
   theme_bw()
+
+ggsave("forFHD_rao_field.png")
 
 forbiomass_field %>%
   gather(-total.weight,-lake,key = "var", value = "value") %>%
@@ -70,8 +74,10 @@ forbiomass_field %>%
   geom_smooth(method="lm",colour="black",se=FALSE) +
   stat_cor() +
   facet_wrap(~ var, scales = "free") +
-  ggtitle("Quadrat FHD vs. points measurements") +
+  ggtitle("Quadrat biomass vs. points measurements") +
   theme_bw()
+
+ggsave("forbiomass_field.png")
 
 forleafweight_field %>%
   gather(-sum_leaf_weight,-lake,key = "var", value = "value") %>%
@@ -81,8 +87,10 @@ forleafweight_field %>%
   geom_smooth(method="lm",colour="black",se=FALSE) +
   stat_cor() +
   facet_wrap(~ var, scales = "free") +
-  ggtitle("Quadrat FHD vs. points measurements") +
+  ggtitle("Quadrat leaf weight vs. points measurements") +
   theme_bw()
+
+ggsave("forleafweight_field.png")
 
 forheight_field %>%
   gather(-veg_height_m,-lake,key = "var", value = "value") %>%
@@ -92,8 +100,10 @@ forheight_field %>%
   geom_smooth(method="lm",colour="black",se=FALSE) +
   stat_cor() +
   facet_wrap(~ var, scales = "free") +
-  ggtitle("Quadrat FHD vs. points measurements") +
+  ggtitle("Quadrat height vs. points measurements") +
   theme_bw()
+
+ggsave("forheight_field.png")
 
 # Quadrat vs. lidar
 forFHD=subset(lidar_wquadratfield_filt,select=c(20,21,24,25,37,38,39,40,41,52,28,43,44,4,15))
@@ -115,6 +125,8 @@ forFHD %>%
   ggtitle("Quadrat FHD") +
   theme_bw()
 
+ggsave("forFHD.png")
+
 forFHD_rao %>%
   gather(-fhd_bio_rao,-lake,key = "var", value = "value") %>%
   ggplot(aes(x = value, y = fhd_bio_rao)) +
@@ -125,6 +137,8 @@ forFHD_rao %>%
   facet_wrap(~ var, scales = "free") +
   ggtitle("Quadrat FHD Rao") +
   theme_bw()
+
+ggsave("forFHD_rao.png")
 
 forheight %>%
   gather(-veg_height_m,-lake,key = "var", value = "value") %>%
@@ -137,6 +151,8 @@ forheight %>%
   ggtitle("Quadrat vegetation height") +
   theme_bw()
 
+ggsave("forheight.png")
+
 forLAI %>%
   gather(-sum_leaf_weight,-lake,key = "var", value = "value") %>%
   ggplot(aes(x = value, y = sum_leaf_weight)) +
@@ -148,6 +164,8 @@ forLAI %>%
   ggtitle("Quadrat leaf weight") +
   theme_bw()
 
+ggsave("forLAI.png")
+
 forbiomass %>%
   gather(-total.weight,-lake,key = "var", value = "value") %>%
   ggplot(aes(x = value, y = total.weight)) +
@@ -156,15 +174,17 @@ forbiomass %>%
   geom_smooth(method="lm",colour="black",se=FALSE) +
   stat_cor() +
   facet_wrap(~ var, scales = "free") +
-  ggtitle("Quadrat leaf weight") +
+  ggtitle("Quadrat biomass") +
   theme_bw()
 
+ggsave("forbiomass.png")
+
 # Points vs. lidar
-forFHD_point=subset(lidar_wpointsfield_filt,select=c(15,16,11,19,43,34,35,28,29,30,31,32,12,55,48))
-forFHD_rao_point=subset(lidar_wpointsfield_filt,select=c(15,16,11,19,43,34,35,28,29,30,31,32,12,55,49))
-forheight_point=subset(lidar_wpointsfield_filt,select=c(15,16,11,19,43,34,35,28,29,30,31,32,12,55,51))
-forbiomass_point=subset(lidar_wpointsfield_filt,select=c(15,16,11,19,43,34,35,28,29,30,31,32,12,55,50))
-forLAI_point=subset(lidar_wpointsfield_filt,select=c(15,16,11,19,43,34,35,28,29,30,31,32,12,55,46))
+forFHD_point=subset(lidar_wpointsfield_filt,select=c(11,12,7,15,39,30,31,24,25,26,8,27,28,52,54))
+forFHD_rao_point=subset(lidar_wpointsfield_filt,select=c(11,12,7,15,39,30,31,24,25,26,8,27,28,52,55))
+forheight_point=subset(lidar_wpointsfield_filt,select=c(11,12,7,15,39,30,31,24,25,26,8,27,28,52,57))
+forbiomass_point=subset(lidar_wpointsfield_filt,select=c(11,12,7,15,39,30,31,24,25,26,8,27,28,52,56))
+forLAI_point=subset(lidar_wpointsfield_filt,select=c(11,12,7,15,39,30,31,24,25,26,8,27,28,52,46))
 
 forFHD_point %>%
   gather(-fhd_pole,-lake,key = "var", value = "value") %>%
@@ -177,6 +197,8 @@ forFHD_point %>%
   ggtitle("Point FHD") +
   theme_bw()
 
+ggsave("forFHD_point.png")
+
 forFHD_rao_point %>%
   gather(-fhd_pole_rao,-lake,key = "var", value = "value") %>%
   ggplot(aes(x = value, y = fhd_pole_rao)) +
@@ -185,8 +207,10 @@ forFHD_rao_point %>%
   geom_smooth(method="lm",colour="black",se=FALSE) +
   stat_cor() +
   facet_wrap(~ var, scales = "free") +
-  ggtitle("Quadrat FHD Rao") +
+  ggtitle("Point FHD Rao") +
   theme_bw()
+
+ggsave("forFHD_rao_point.png")
 
 forheight_point %>%
   gather(-pole_height,-lake,key = "var", value = "value") %>%
@@ -196,8 +220,10 @@ forheight_point %>%
   geom_smooth(method="lm",colour="black",se=FALSE) +
   stat_cor() +
   facet_wrap(~ var, scales = "free") +
-  ggtitle("Quadrat vegetation height") +
+  ggtitle("Point vegetation height") +
   theme_bw()
+
+ggsave("forheight_point.png")
 
 forLAI_point %>%
   gather(-gct_lai,-lake,key = "var", value = "value") %>%
@@ -207,8 +233,10 @@ forLAI_point %>%
   geom_smooth(method="lm",colour="black",se=FALSE) +
   stat_cor() +
   facet_wrap(~ var, scales = "free") +
-  ggtitle("Quadrat leaf weight") +
+  ggtitle("Point LAI") +
   theme_bw()
+
+ggsave("forLAI_point.png")
 
 forbiomass_point %>%
   gather(-sum_pole_contact,-lake,key = "var", value = "value") %>%
@@ -218,7 +246,13 @@ forbiomass_point %>%
   geom_smooth(method="lm",colour="black",se=FALSE) +
   stat_cor() +
   facet_wrap(~ var, scales = "free") +
-  ggtitle("Quadrat leaf weight") +
+  ggtitle("Point biomass") +
   theme_bw()
 
+ggsave("forbiomass_point.png")
 
+ggpairs(lidar_wpointsfield_filt[,c(11,12,7,15,39,30,31,24,25,26,8,27,28,52)], aes(colour =lake, alpha = 0.4))
+ggsave("lidar_perlakes.png")
+
+ggpairs(lidar_wpointsfield[(lidar_wpointsfield$lake== "tisza"),c(11,12,7,15,39,30,31,24,25,26,8,27,28,53)], aes(colour =season, alpha = 0.4))
+ggsave("lidar_perseasons.png")

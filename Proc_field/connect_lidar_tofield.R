@@ -71,8 +71,8 @@ tiszaon_lidar$pointid <- NA
 balaton_lidar_sel=subset(balaton_lidar,select=c(1:43,48:57,59:66))
 ferto_lidar_sel=subset(ferto_lidar,select=c(1:43,48:57,59:66))
 
-tisza_lidar_sel=subset(tisza_lidar,select=c(1:41,64,42,46:63))
-tiszaon_lidar_sel=subset(tiszaon_lidar,select=c(1:41,64,42,46:63))
+tisza_lidar_sel=subset(tisza_lidar,select=c(1:42,62,46:58,60,61,59,63,64))
+tiszaon_lidar_sel=subset(tiszaon_lidar,select=c(1:42,62,46:58,60,61,59,63,64))
 names(tisza_lidar_sel) <- names(balaton_lidar_sel)
 names(tiszaon_lidar_sel) <- names(balaton_lidar_sel)
 names(ferto_lidar_sel) <- names(balaton_lidar_sel)
@@ -141,5 +141,5 @@ polecontact[,9]=polecontact[,9]*4.5
 data$pole_height=apply(polecontact, 1, max)
 
 # Export
-lidar_wpointsfield=subset(data,select=c(1:4,41:43,56,5:40,54,55,62:65,57:61))
+lidar_wpointsfield=subset(data,select=c(1:42,52:65))
 write.csv(lidar_wpointsfield,"lidar_wpointsfield.csv")
