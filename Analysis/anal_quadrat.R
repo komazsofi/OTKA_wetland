@@ -24,11 +24,11 @@ setwd(workdir)
 lidar_wpointsfield=read.csv("lidar_wquadratfield.csv")
 lidar_wpointsfield_filt=lidar_wpointsfield[lidar_wpointsfield$season == "leafoff", ]
 
-forFHD=subset(lidar_wpointsfield_filt,select=c(19:53,4,15))
-forFHD_rao=subset(lidar_wpointsfield_filt,select=c(19:53,4,17))
-forheight=subset(lidar_wpointsfield_filt,select=c(19:53,4,12))
-forbiomass=subset(lidar_wpointsfield_filt,select=c(19:53,4,11))
-forLAI=subset(lidar_wpointsfield_filt,select=c(19:53,4,13))
+forFHD=subset(lidar_wpointsfield_filt,select=c(20,21,24,25,37,38,39,40,41,52,28,43,44,4,15))
+forFHD_rao=subset(lidar_wpointsfield_filt,select=c(20,21,24,25,37,38,39,40,41,52,28,43,44,4,17))
+forheight=subset(lidar_wpointsfield_filt,select=c(20,21,24,25,37,38,39,40,41,52,28,43,44,4,12))
+forbiomass=subset(lidar_wpointsfield_filt,select=c(20,21,24,25,37,38,39,40,41,52,28,43,44,4,11))
+forLAI=subset(lidar_wpointsfield_filt,select=c(20,21,24,25,37,38,39,40,41,52,28,43,4,44,13))
 
 #Visualize
 
