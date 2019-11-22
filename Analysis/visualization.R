@@ -21,8 +21,8 @@ library(GGally)
 
 # Import
 
-workdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Analysis/2019Nov/"
-#workdir="D:/Sync/_Amsterdam/11_AndrasProject/Analysis/2019Nov/"
+#workdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Analysis/2019Nov/"
+workdir="D:/Sync/_Amsterdam/11_AndrasProject/Analysis/2019Nov/"
 setwd(workdir)
 
 lidar_wquadratfield=read.csv("lidar_wquadratfield.csv")
