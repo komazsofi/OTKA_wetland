@@ -5,7 +5,7 @@ library(dplyr)
 library(sdm)
 library(stringr)
 
-workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/lidar/fertoTo_HU_AT-20191026T210011Z-001/fertoTo_HU_AT/"
+workingdir="C:/Koma/00_AndrasProjekt/lidar/balaton/"
 #workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/lidar/tiszaToLeafOff-20191026T193315Z-001/tiszaToLeafOff/"
 #workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/lidar/tiszaToLeafOn-20191026T205134Z-001/tiszaToLeafOn/"
 #workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/lidar/balaton-20191026T153059Z-001/balaton/"
@@ -14,9 +14,9 @@ setwd(workingdir)
 crs_proj="+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs"
 #crs_proj="+proj=utm +zone=34 +datum=WGS84 +units=m +no_defs"
 
-shp=readOGR(".","w_point")
+shp=readOGR(".","w_point_balaton")
+#shp=readOGR(".","w_point")
 #shp=readOGR(".","tisza_full")
-#shp=readOGR(".","w_point_balaton")
 shp.df <- as(shp, "data.frame")
 
 shp_sel=subset(shp.df, select=c("coords.x1","coords.x2","class","OBJNAME"))
@@ -63,23 +63,7 @@ for (i in id) {
   crs(rasters) <- crs_proj
   names(rasters) <- feaname
   
-  rasters$pc_rel1.grd=rasters$pc1.grd/rasters$pcount.grd
-  rasters$pc_rel2.grd=rasters$pc2.grd/rasters$pcount.grd
-  rasters$pc_rel3.grd=rasters$pc3.grd/rasters$pcount.grd
-  rasters$pc_rel4.grd=rasters$pc4.grd/rasters$pcount.grd
-  rasters$pc_rel5.grd=rasters$pc5.grd/rasters$pcount.grd
-  rasters$pc_rel6.grd=rasters$pc6.grd/rasters$pcount.grd
-  rasters$pc_rel7.grd=rasters$pc7.grd/rasters$pcount.grd
-  rasters$pc_rel8.grd=rasters$pc8.grd/rasters$pcount.grd
-  rasters$pc_rel9.grd=rasters$pc9.grd/rasters$pcount.grd
-  rasters$pc_rel10.grd=rasters$pc10.grd/rasters$pcount.grd
-  
-  rasters$pc_rel_1_5.grd=rasters$pcsub15.grd/rasters$pcount.grd
-  rasters$pc_rel_high.grd=rasters$pchigh.grd/rasters$pcount.grd
-  
-  sel_rasters=subset(rasters, c(2,5,7,9,10,11,12,14,15:24,40,41,43:57,39))
-  
-  writeRaster(sel_rasters,paste(i,"merged.grd",sep=""),overwrite=TRUE)
+  writeRaster(rasters,paste(i,"merged.grd",sep=""),overwrite=TRUE)
   
 }
 
@@ -90,6 +74,10 @@ for (j in grdlist) {
   
   raster=stack(j)
   print(dim(raster))
+  
+  possibleError=tryCatch(sdmData(class~.,train=shp_sel,predictors = raster), error = function(e) e)
+  
+  if(inherits(possibleError, "error")) next
   
   d <- sdmData(class~.,train=shp_sel,predictors = raster)
   data=d@features
@@ -108,7 +96,7 @@ allcsv <- lapply(files,function(g){
 
 allcsv_df <- do.call(rbind.data.frame, allcsv)
 
-write.csv(allcsv_df,"ferto_lidar.csv")
+#write.csv(allcsv_df,"ferto_lidar.csv")
 #write.csv(allcsv_df,"tisza_leafoff_lidar.csv")
 #write.csv(allcsv_df,"tisza_leafon_lidar.csv")
-#write.csv(allcsv_df,"balaton_lidar.csv")
+write.csv(allcsv_df,"balaton_lidar.csv")
