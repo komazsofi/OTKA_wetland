@@ -5,7 +5,7 @@ library(dplyr)
 library(sdm)
 library(stringr)
 
-workingdir="C:/Koma/00_AndrasProjekt/lidar/balaton/"
+workingdir="C:/Koma/00_AndrasProjekt/lidar/balaton/test/"
 #workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/lidar/tiszaToLeafOff-20191026T193315Z-001/tiszaToLeafOff/"
 #workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/lidar/tiszaToLeafOn-20191026T205134Z-001/tiszaToLeafOn/"
 #workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/lidar/balaton-20191026T153059Z-001/balaton/"
@@ -14,7 +14,7 @@ setwd(workingdir)
 crs_proj="+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs"
 #crs_proj="+proj=utm +zone=34 +datum=WGS84 +units=m +no_defs"
 
-shp=readOGR(".","w_point_balaton")
+shp=readOGR(dsn="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/fielddata/shp",layer="w_point_balaton")
 #shp=readOGR(".","w_point")
 #shp=readOGR(".","tisza_full")
 shp.df <- as(shp, "data.frame")
