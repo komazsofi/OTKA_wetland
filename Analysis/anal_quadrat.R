@@ -18,17 +18,17 @@ library(caret)
 library(stargazer)
 
 #workdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Analysis/2019Nov/"
-workdir="D:/Sync/_Amsterdam/11_AndrasProject/Analysis/2019Nov/"
+workdir="C:/Koma/Sync/_Amsterdam/_PhD/Chapter2_habitat_str_lidar/3_Dataprocessing/Analysis1/"
 setwd(workdir)
 
 lidar_wpointsfield=read.csv("lidar_wquadratfield.csv")
 lidar_wpointsfield_filt=lidar_wpointsfield[lidar_wpointsfield$season == "leafoff", ]
 
-forFHD=subset(lidar_wpointsfield_filt,select=c(20,21,24,25,37,38,39,40,41,52,28,43,44,4,15))
-forFHD_rao=subset(lidar_wpointsfield_filt,select=c(20,21,24,25,37,38,39,40,41,52,28,43,44,4,17))
-forheight=subset(lidar_wpointsfield_filt,select=c(20,21,24,25,37,38,39,40,41,52,28,43,44,4,12))
-forbiomass=subset(lidar_wpointsfield_filt,select=c(20,21,24,25,37,38,39,40,41,52,28,43,44,4,11))
-forLAI=subset(lidar_wpointsfield_filt,select=c(20,21,24,25,37,38,39,40,41,52,28,43,4,44,13))
+forFHD=subset(lidar_wpointsfield_filt,select=c(19:38,4,15))
+forFHD_rao=subset(lidar_wpointsfield_filt,select=c(19:38,4,17))
+forheight=subset(lidar_wpointsfield_filt,select=c(19:38,4,12))
+forbiomass=subset(lidar_wpointsfield_filt,select=c(19:38,4,11))
+forLAI=subset(lidar_wpointsfield_filt,select=c(19:38,4,13))
 
 #Visualize
 
@@ -65,7 +65,7 @@ forLAI %>%
   theme_bw()
 
 ## Filter 
-data_sel=subset(lidar_wpointsfield_filt,select=c(20,21,24,25,37,38,39,40,41,52,4,15,17,12,11,13))
+data_sel=subset(lidar_wpointsfield_filt,select=c(19:38,4,15,17,12,11,13))
 
 ## VIF
 vif_1=vifstep(data_sel[1:10], th=2.5)
@@ -109,7 +109,7 @@ colnames(data_pca)[3] <- "fhd_bio"
 
 ## Modelling
 
-mlm.fit_fhd_vif1=lm(fhd_bio~.,data=data_sel[,c(1,2,4,10,12)])
+mlm.fit_fhd_vif1=lm(fhd_bio~.,data=data_sel[,c(2,22)])
 summary(mlm.fit_fhd_vif1)
 stargazer(mlm.fit_fhd_vif1,type="text")
 
