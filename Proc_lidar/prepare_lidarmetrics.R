@@ -5,18 +5,19 @@ library(dplyr)
 library(sdm)
 library(stringr)
 
-workingdir="C:/Koma/00_AndrasProjekt/lidar/balaton/test/"
-#workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/lidar/tiszaToLeafOff-20191026T193315Z-001/tiszaToLeafOff/"
-#workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/lidar/tiszaToLeafOn-20191026T205134Z-001/tiszaToLeafOn/"
-#workingdir="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/lidar/balaton-20191026T153059Z-001/balaton/"
+workingdir="D:/Koma/_PhD/Sync/_Amsterdam/_PhD/Chapter2_habitat_str_lidar/2_Dataset/selected_lidarlayers/tisza/"
+#workingdir="D:/Koma/_PhD/Sync/_Amsterdam/_PhD/Chapter2_habitat_str_lidar/2_Dataset/selected_lidarlayers/ferto/"
+#workingdir="D:/Koma/_PhD/Sync/_Amsterdam/_PhD/Chapter2_habitat_str_lidar/2_Dataset/selected_lidarlayers/balaton/"
 setwd(workingdir)
+dir.create("crop")
 
-crs_proj="+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs"
-#crs_proj="+proj=utm +zone=34 +datum=WGS84 +units=m +no_defs"
+#crs_proj="+proj=utm +zone=33 +datum=WGS84 +units=m +no_defs"
+crs_proj="+proj=utm +zone=34 +datum=WGS84 +units=m +no_defs"
 
-shp=readOGR(dsn="C:/Koma/Sync/_Amsterdam/11_AndrasProject/Dataset/fielddata/shp",layer="w_point_balaton")
-#shp=readOGR(".","w_point")
-#shp=readOGR(".","tisza_full")
+#shp=readOGR(dsn="D:/Koma/_PhD/Sync/_Amsterdam/_PhD/Chapter2_habitat_str_lidar/2_Dataset/field_data",layer="w_point_balaton")
+#shp=readOGR(dsn="D:/Koma/_PhD/Sync/_Amsterdam/_PhD/Chapter2_habitat_str_lidar/2_Dataset/field_data",layer=,"w_point")
+shp=readOGR(dsn="D:/Koma/_PhD/Sync/_Amsterdam/_PhD/Chapter2_habitat_str_lidar/2_Dataset/field_data","tisza_full")
+
 shp.df <- as(shp, "data.frame")
 
 shp_sel=subset(shp.df, select=c("coords.x1","coords.x2","class","OBJNAME"))
@@ -97,6 +98,6 @@ allcsv <- lapply(files,function(g){
 allcsv_df <- do.call(rbind.data.frame, allcsv)
 
 #write.csv(allcsv_df,"ferto_lidar.csv")
-#write.csv(allcsv_df,"tisza_leafoff_lidar.csv")
+write.csv(allcsv_df,"tisza_leafoff_lidar.csv")
 #write.csv(allcsv_df,"tisza_leafon_lidar.csv")
-write.csv(allcsv_df,"balaton_lidar.csv")
+#write.csv(allcsv_df,"balaton_lidar.csv")
